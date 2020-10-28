@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Task]
+(
+	[Id] INT NOT NULL PRIMARY KEY, 
+    [IsCompleted] BIT NOT NULL DEFAULT 0, 
+    [Name] NVARCHAR(200) NULL, 
+    [Created] DATETIME NULL DEFAULT CURRENT_TIMESTAMP, 
+    [Updated] DATETIME NULL
+)

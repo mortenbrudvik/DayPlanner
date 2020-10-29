@@ -58,7 +58,7 @@
     <Folder Include="Properties" />
   </ItemGroup>
   <ItemGroup>
-    <Build Include="Task.sql" />
+    <Build Include="TaskItems.sql" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Database.publish.xml" />

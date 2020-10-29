@@ -3,7 +3,7 @@ using ApplicationCore.Common;
 
 namespace ApplicationCore.Entities
 {
-    public class Task : BaseEntity
+    public class TaskItem : BaseEntity
     {
         public string Name { get; set; }
         public bool IsCompleted { get; set; }

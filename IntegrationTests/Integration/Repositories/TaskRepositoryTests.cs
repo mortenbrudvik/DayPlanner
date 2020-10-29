@@ -1,4 +1,7 @@
-﻿using ApplicationCore.Entities;
+﻿using System;
+using System.Data.SqlClient;
+using ApplicationCore.Entities;
+using Dapper;
 using Infrastructure.Repositories;
 using IntegrationTests.Fixtures;
 using Xunit;
@@ -6,12 +9,15 @@ using Xunit;
 namespace IntegrationTests.Integration.Repositories
 {
     [Collection("Database collection")]
-    public class TaskRepositoryTests 
+    [Trait("Category", "Database")]
+    public class TaskRepositoryTests : IDisposable
     {
+        private readonly DatabaseFixture _fixture;
         private readonly TaskRepository _taskRepository;
 
         public TaskRepositoryTests(DatabaseFixture fixture)
         {
+            _fixture = fixture;
             _taskRepository = new TaskRepository(fixture.ConnectionString);
         }
 
@@ -89,6 +95,12 @@ namespace IntegrationTests.Integration.Repositories
             {
                 Name = name
             };
+        }
+
+        public void Dispose()
+        {
+            var db = new SqlConnection(_fixture.ConnectionString);
+            db.Execute("DELETE FROM TaskItems");
         }
     }
 }

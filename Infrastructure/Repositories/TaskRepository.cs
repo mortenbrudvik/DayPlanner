@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
-using Dapper;
+using Dapper.Contrib.Extensions;
 
 namespace Infrastructure.Repositories
 {
@@ -19,42 +19,33 @@ namespace Infrastructure.Repositories
             _db = new SqlConnection(connString);
         }
 
-        public async Task<TaskItem> Get(int id)
+        public async Task<TaskItem> GetAsync(int id)
         {
-            var tasks = await _db.QueryAsync<TaskItem>("SELECT * FROM TaskItems WHERE Id = @Id", new {Id = id});
-            return tasks.SingleOrDefault();
+            return await _db.GetAsync<TaskItem>(id);
         }
 
-        public Task<IEnumerable<TaskItem>> GetAll()
+        public async Task<IReadOnlyList<TaskItem>> GetAllAsync()
         {
-            return _db.QueryAsync<TaskItem>("SELECT * FROM TaskItems");
+            var tasks = await _db.GetAllAsync<TaskItem>();
+            return tasks.ToList().AsReadOnly();
         }
 
-        public async Task<TaskItem> AddAsync(TaskItem task)
+        public async Task AddAsync(TaskItem task)
         {
             task.Created = DateTime.UtcNow;
-            const string sql = "INSERT INTO TaskItems (Name, Created) VALUES(@Name, @Created); " +
-                               "SELECT CAST(SCOPE_IDENTITY() as int)";
-            var result = _db.Query<int>(sql, task);
-            task.Id = result.Single();
-            return task;
+            task.Updated = DateTime.UtcNow;
+            task.Id = await _db.InsertAsync(task);
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            await _db.ExecuteAsync("DELETE FROM TaskItems WHERE Id = @Id", new {Id = id});
+            await _db.DeleteAsync(new TaskItem {Id = id});
         }
 
-        public async Task<TaskItem> Update(TaskItem task)
+        public async Task UpdateAsync(TaskItem task)
         {
             task.Updated = DateTime.UtcNow;
-            
-            await _db.ExecuteAsync("UPDATE TaskItems " +
-                            "SET Name = @Name, " +
-                            "    Updated = @Updated, " +
-                            "    IsCompleted = @IsCompleted " +
-                            "WHERE Id = @Id", task);
-            return task;
+            await _db.UpdateAsync(task);
         }
     }
 }

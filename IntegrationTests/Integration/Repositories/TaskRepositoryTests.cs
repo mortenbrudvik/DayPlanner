@@ -28,17 +28,17 @@ namespace IntegrationTests.Integration.Repositories
         {
             var task = CreateTask("Make some food");
 
-            var insertedTask = await _taskRepository.AddAsync(task);
+            await _taskRepository.AddAsync(task);
 
-            _output.WriteLine(insertedTask.ToYaml());
+            _output.WriteLine(task.ToYaml());
 
-            Assert.True(insertedTask.Id > 0);
+            Assert.True(task.Id > 0);
         }
 
         [Fact]
         public async void GetAll_ShouldReturnEmpty_WhenThereIsNoTasks()
         {
-            var tasks = await _taskRepository.GetAll();
+            var tasks = await _taskRepository.GetAllAsync();
             
             Assert.Empty(tasks);
         }
@@ -49,7 +49,7 @@ namespace IntegrationTests.Integration.Repositories
             var task = CreateTask("Make some food");
             await _taskRepository.AddAsync(task);
 
-            var tasks = await _taskRepository.GetAll();
+            var tasks = await _taskRepository.GetAllAsync();
 
             _output.WriteLine(tasks.ToYaml());
 
@@ -62,7 +62,7 @@ namespace IntegrationTests.Integration.Repositories
             var expectedTask = CreateTask("Make some food");
             await _taskRepository.AddAsync(expectedTask);
 
-            var actualTask = await _taskRepository.Get(expectedTask.Id);
+            var actualTask = await _taskRepository.GetAsync(expectedTask.Id);
 
             _output.WriteLine(actualTask.ToYaml());
 
@@ -76,9 +76,9 @@ namespace IntegrationTests.Integration.Repositories
             await _taskRepository.AddAsync(task);
 
             task.IsCompleted = true;
-            await _taskRepository.Update(task);
+            await _taskRepository.UpdateAsync(task);
 
-            var updatedTask = await _taskRepository.Get(task.Id);
+            var updatedTask = await _taskRepository.GetAsync(task.Id);
 
             _output.WriteLine(updatedTask.ToYaml());
 
@@ -89,11 +89,11 @@ namespace IntegrationTests.Integration.Repositories
         public async void Delete_ShouldDeleteTask_WhenTaskExist()
         {
             var task = CreateTask("Make some food");
-            var insertedTask = await _taskRepository.AddAsync(task);
+            await _taskRepository.AddAsync(task);
 
-            await _taskRepository.Delete(insertedTask.Id);
+            await _taskRepository.DeleteAsync(task.Id);
 
-            var tasks = await _taskRepository.GetAll();
+            var tasks = await _taskRepository.GetAllAsync();
 
             Assert.Empty(tasks);
 

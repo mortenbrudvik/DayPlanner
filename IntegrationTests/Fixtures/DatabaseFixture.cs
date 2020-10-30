@@ -20,10 +20,15 @@ namespace IntegrationTests.Fixtures
             config = builder.Build();
         }
 
-        public void Dispose()
+        public void DeleteAllTasks()
         {
             var db = new SqlConnection(ConnectionString);
             db.Execute("DELETE FROM TaskItems");
+        }
+
+        public void Dispose()
+        {
+            DeleteAllTasks();
         }
     }
 }

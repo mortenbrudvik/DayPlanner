@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Data.SqlClient;
 using ApplicationCore.Entities;
-using Dapper;
+using ApplicationCore.Extensions;
 using Infrastructure.Repositories;
 using IntegrationTests.Fixtures;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace IntegrationTests.Integration.Repositories
 {
@@ -13,11 +13,13 @@ namespace IntegrationTests.Integration.Repositories
     public class TaskRepositoryTests : IDisposable
     {
         private readonly DatabaseFixture _fixture;
+        private readonly ITestOutputHelper _output;
         private readonly TaskRepository _taskRepository;
 
-        public TaskRepositoryTests(DatabaseFixture fixture)
+        public TaskRepositoryTests(DatabaseFixture fixture, ITestOutputHelper output)
         {
             _fixture = fixture;
+            _output = output;
             _taskRepository = new TaskRepository(fixture.ConnectionString);
         }
 
@@ -28,14 +30,16 @@ namespace IntegrationTests.Integration.Repositories
 
             var insertedTask = await _taskRepository.AddAsync(task);
 
+            _output.WriteLine(insertedTask.ToYaml());
+
             Assert.True(insertedTask.Id > 0);
         }
 
         [Fact]
-        public async void GetAll_ShouldReturnEmptyList_WhenThereIsNoTasks()
+        public async void GetAll_ShouldReturnEmpty_WhenThereIsNoTasks()
         {
             var tasks = await _taskRepository.GetAll();
-
+            
             Assert.Empty(tasks);
         }
 
@@ -46,6 +50,8 @@ namespace IntegrationTests.Integration.Repositories
             await _taskRepository.AddAsync(task);
 
             var tasks = await _taskRepository.GetAll();
+
+            _output.WriteLine(tasks.ToYaml());
 
             Assert.NotEmpty(tasks);
         }
@@ -58,11 +64,13 @@ namespace IntegrationTests.Integration.Repositories
 
             var actualTask = await _taskRepository.Get(expectedTask.Id);
 
+            _output.WriteLine(actualTask.ToYaml());
+
             Assert.Equal(expectedTask.Id, actualTask.Id);
         }
 
         [Fact]
-        public async void UpdateAsync_ShouldBeMarkedAsCompleted_WhenSettingCompletedToTrue()
+        public async void UpdateAsync_ShouldBeMarkedAsCompleted_WhenSettingCompletedIsSetToTrue()
         {
             var task = CreateTask("Make some food");
             await _taskRepository.AddAsync(task);
@@ -71,6 +79,8 @@ namespace IntegrationTests.Integration.Repositories
             await _taskRepository.Update(task);
 
             var updatedTask = await _taskRepository.Get(task.Id);
+
+            _output.WriteLine(updatedTask.ToYaml());
 
             Assert.True(updatedTask.IsCompleted);
         }
@@ -99,8 +109,7 @@ namespace IntegrationTests.Integration.Repositories
 
         public void Dispose()
         {
-            var db = new SqlConnection(_fixture.ConnectionString);
-            db.Execute("DELETE FROM TaskItems");
+            _fixture.DeleteAllTasks();
         }
     }
 }

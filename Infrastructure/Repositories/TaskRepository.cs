@@ -10,13 +10,13 @@ using Dapper.Contrib.Extensions;
 
 namespace Infrastructure.Repositories
 {
-    public class TaskRepository : ITaskRepository
+    public class TaskRepository : ITaskRepository, IDisposable
     {
         private readonly IDbConnection _db;
 
-        public TaskRepository(string connString)
+        public TaskRepository(SqlConnection connection)
         {
-            _db = new SqlConnection(connString);
+            _db = connection;
         }
 
         public async Task<TaskItem> GetAsync(int id)
@@ -33,7 +33,6 @@ namespace Infrastructure.Repositories
         public async Task AddAsync(TaskItem task)
         {
             task.Created = DateTime.UtcNow;
-            task.Updated = DateTime.UtcNow;
             task.Id = await _db.InsertAsync(task);
         }
 
@@ -46,6 +45,11 @@ namespace Infrastructure.Repositories
         {
             task.Updated = DateTime.UtcNow;
             await _db.UpdateAsync(task);
+        }
+
+        public void Dispose()
+        {
+            _db?.Dispose();
         }
     }
 }

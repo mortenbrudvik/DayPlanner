@@ -8,6 +8,6 @@ namespace ApplicationCore.Entities
         public string Name { get; set; }
         public bool IsCompleted { get; set; }
         public DateTime Created { get; set; }
-        public DateTime Updated { get; set; }
+        public DateTime? Updated { get; set; }
     }
 }

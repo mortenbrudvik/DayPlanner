@@ -8,16 +8,16 @@ namespace IntegrationTests.Fixtures
 {
     public class DatabaseFixture :IDisposable
     {
-        private static IConfigurationRoot config;
+        private static IConfigurationRoot _config;
 
-        public string ConnectionString => config.GetConnectionString("DefaultConnection");
+        public string ConnectionString => _config.GetConnectionString("DefaultConnection");
 
         public DatabaseFixture()
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            config = builder.Build();
+            _config = builder.Build();
         }
 
         public void DeleteAllTasks()

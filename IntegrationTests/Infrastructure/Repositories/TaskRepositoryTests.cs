@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.SqlClient;
 using ApplicationCore.Entities;
 using ApplicationCore.Extensions;
 using Infrastructure.Repositories;
@@ -20,7 +21,7 @@ namespace IntegrationTests.Integration.Repositories
         {
             _fixture = fixture;
             _output = output;
-            _taskRepository = new TaskRepository(fixture.ConnectionString);
+            _taskRepository = new TaskRepository(new SqlConnection(fixture.ConnectionString));
         }
 
         [Fact]

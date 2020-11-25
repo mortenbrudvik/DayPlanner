@@ -9,13 +9,13 @@ namespace Infrastructure.Data.Config
         public void Configure(EntityTypeBuilder<TaskItem> builder)
         {
             builder.Property(t => t.Name)
+                .HasMaxLength(250)
                 .IsRequired();
 
             builder.Property(t => t.Status)
                 .HasConversion(
                     t => t.Value,
                     t => TaskStatus.FromValue(t));
-            
         }
     }
 }

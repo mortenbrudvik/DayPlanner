@@ -3,9 +3,9 @@ using IntegrationTests.Mocks;
 
 namespace IntegrationTests.Fixtures
 {
-    public class DatabaseFixture : IDisposable
+    public class EFFixture : IDisposable
     {
-        public DatabaseFixture()
+        public EFFixture()
         {
             using var context = new AppDbContextMock();
             context.Database.EnsureCreated();
@@ -14,7 +14,7 @@ namespace IntegrationTests.Fixtures
         public void Dispose()
         {
             using var context = new AppDbContextMock();
-            context.Database.EnsureCreated();
+            context.Database.EnsureDeleted();
         }
     }
 }

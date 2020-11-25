@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using ApplicationCore.Common;
 using ApplicationCore.Entities;
 using Infrastructure.Data.Config;
 using Microsoft.EntityFrameworkCore;

@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "ApplicationCore\ApplicationCore.csproj", "{094C82BA-A134-4A67-9EF4-B56CF852E8E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ApplicationCore", "src\ApplicationCore\ApplicationCore.csproj", "{094C82BA-A134-4A67-9EF4-B56CF852E8E6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{286F00DC-2035-40A7-99DD-50A97AF2D4D3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{286F00DC-2035-40A7-99DD-50A97AF2D4D3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "UnitTests\UnitTests.csproj", "{5D71B64D-95DA-45FE-945A-61DCA88ADE32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTests", "tests\UnitTests\UnitTests.csproj", "{5D71B64D-95DA-45FE-945A-61DCA88ADE32}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "IntegrationTests\IntegrationTests.csproj", "{3D437666-BAF6-444F-A99B-2C7937D7E35D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IntegrationTests", "tests\IntegrationTests\IntegrationTests.csproj", "{3D437666-BAF6-444F-A99B-2C7937D7E35D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PublicAPI", "PublicAPI\PublicAPI.csproj", "{A91B61DB-16DC-408E-BF0C-9345F9F2A126}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PublicAPI", "src\PublicAPI\PublicAPI.csproj", "{A91B61DB-16DC-408E-BF0C-9345F9F2A126}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{ABC56652-063C-4EE9-B077-B9894ADFCC4F}"
 EndProject

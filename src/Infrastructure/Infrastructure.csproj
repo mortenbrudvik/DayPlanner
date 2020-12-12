@@ -5,13 +5,6 @@
     <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>..\Debug\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>..\Release\</OutputPath>
-  </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Meziantou.MSBuild.InternalsVisibleTo" Version="1.0.2">
       <PrivateAssets>all</PrivateAssets>

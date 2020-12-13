@@ -4,12 +4,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using ApplicationCore.Common;
 using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
 using Infrastructure.Data.Config;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : DbContext,  IApplicationDbContext
     {
         public DbSet<TaskItem> Tasks { get; set; }
 

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Data
 {
-    public class AppDbContext : DbContext,  IApplicationDbContext
+    public class AppDbContext : DbContext,  IAppDbContext
     {
         public DbSet<TaskItem> Tasks { get; set; }
 

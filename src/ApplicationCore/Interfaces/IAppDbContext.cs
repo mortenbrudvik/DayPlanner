@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApplicationCore.Interfaces
 {
-    public interface IApplicationDbContext
+    public interface IAppDbContext
     {
        DbSet<TaskItem> Tasks { get; set; }
 

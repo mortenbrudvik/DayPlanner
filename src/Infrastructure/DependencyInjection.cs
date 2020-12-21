@@ -1,4 +1,5 @@
-﻿using Infrastructure.Data;
+﻿using ApplicationCore.Interfaces;
+using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,8 +10,8 @@ namespace Infrastructure
     {
         public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<AppDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Default")));
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("Default")));
+            services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
 
             return services;
         }

@@ -8,7 +8,7 @@ namespace Infrastructure.Data.Config
     {
         public void Configure(EntityTypeBuilder<TaskItem> builder)
         {
-            builder.Property(t => t.Name)
+            builder.Property(t => t.Title)
                 .HasMaxLength(250)
                 .IsRequired();
 

@@ -45,7 +45,7 @@ namespace IntegrationTests.Infrastructure.Repositories
             await context.AddAsync(task);
             await context.SaveChangesAsync();
 
-            task.Name += " now";
+            task.Title += " now";
             await context.SaveChangesAsync();
             _output.WriteLine(task.ToYaml());
 
@@ -56,7 +56,7 @@ namespace IntegrationTests.Infrastructure.Repositories
         {
             return new TaskItem()
             {
-                Name = name
+                Title = name
             };
         }
     }

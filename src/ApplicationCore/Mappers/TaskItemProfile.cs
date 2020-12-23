@@ -1,4 +1,5 @@
-﻿using ApplicationCore.Entities;
+﻿using System;
+using ApplicationCore.Entities;
 using ApplicationCore.Models;
 using AutoMapper;
 
@@ -8,8 +9,11 @@ namespace ApplicationCore.Mappers
     {
         public TaskItemProfile()
         {
-            CreateMap<TaskItem, TaskDto>();
-            CreateMap<TaskDto, TaskItem>();
+            CreateMap<TaskItem, TaskDto>()
+                .ForMember(
+                    dest => dest.Status,
+                    opt => opt.MapFrom(source => source.Status.Value)).
+                ReverseMap();
         }
     }
 }

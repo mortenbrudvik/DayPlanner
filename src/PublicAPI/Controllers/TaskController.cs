@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using ApplicationCore.Commands;
 using ApplicationCore.Models;
 using ApplicationCore.Queries;
 using MediatR;
@@ -19,7 +20,7 @@ namespace PublicAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<TaskDto>>> Get()
+        public async Task<ActionResult<List<TaskDto>>> GetAll()
         {
             return await _mediator.Send(new GetTasksQuery());
         }
@@ -27,12 +28,18 @@ namespace PublicAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<TaskDto>> Get(int id)
         {
-            var task =  await _mediator.Send(new GetTaskQuery(id));
+            var taskDto =  await _mediator.Send(new GetTaskQuery(id));
             
-            if(task==null)
+            if(taskDto==null)
                 return NotFound();
 
-            return task;
+            return taskDto;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<int>> Create(CreateTaskCommand command)
+        {
+            return await _mediator.Send(command);
         }
     }
 }

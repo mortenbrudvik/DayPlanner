@@ -21,6 +21,7 @@ namespace PublicAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen();
+            services.AddHttpContextAccessor();
             services.AddApplicationCore();
             services.AddInfrastructure(Configuration);
             services.AddControllers();

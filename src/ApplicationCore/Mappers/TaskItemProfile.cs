@@ -12,8 +12,8 @@ namespace ApplicationCore.Mappers
             CreateMap<TaskItem, TaskDto>()
                 .ForMember(
                     dest => dest.Status,
-                    opt => opt.MapFrom(source => source.Status.Value)).
-                ReverseMap();
+                    opt => opt.MapFrom(source => source.Status.Value))
+                .ReverseMap();
         }
     }
 }
